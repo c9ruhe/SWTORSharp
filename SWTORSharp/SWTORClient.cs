@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 using Newtonsoft.Json;
-
+using System.Net;
 
 namespace SWTORSharp.Core
 {
@@ -20,11 +20,16 @@ namespace SWTORSharp.Core
                     /// <returns></returns>
                     public Item GetItemById(int id)
                     {
+                        IRestResponse response = new RestResponse();
                         var request = new RestRequest($"items/{id}");
                         request.AddHeader("X-API-KEY", ApiKey);
-                        var response = client.Execute(request);
-                        var item = Item.Convert.FromJson(response.Content);
+
+                        response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var item = Item.Convert.FromJson(response.Content);
                         return item;
+
                     }
                     /// <summary>
                     /// Gives a paginated list of items. Each item will include basic information about the item with a link to the json to get more information
@@ -57,7 +62,9 @@ namespace SWTORSharp.Core
                             request.AddParameter("minimum_level_lt", MaximumLevelLessThan);
                         request.AddHeader("X-API-KEY", ApiKey);
                         var response = client.Execute(request);
-                        var item = ItemList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var item = ItemList.Convert.FromJson(response.Content);
                         return item;
                     }
                     /// <summary>
@@ -70,7 +77,9 @@ namespace SWTORSharp.Core
                         var request = new RestRequest($"item_models/{id}");
                         request.AddHeader("X-API-KEY", ApiKey);
                         var response = client.Execute(request);
-                        var item = ItemList2.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var item = ItemList2.Convert.FromJson(response.Content);
                         return item;
                     }
                     public CraftingItem GetCraftingsById(int id)
@@ -78,7 +87,9 @@ namespace SWTORSharp.Core
                         var request = new RestRequest($"craftings/{id}");
                         request.AddHeader("X-API-KEY", ApiKey);
                         var response = client.Execute(request);
-                        var ci = CraftingItem.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var ci = CraftingItem.Convert.FromJson(response.Content);
                         return ci;
                     }
                     public CraftingList GetCraftings(int page = 1, int perpage = 50, SortOrder order = SortOrder.display_name_asc, CraftingProfession profession = CraftingProfession.Any, string query = null)
@@ -94,7 +105,9 @@ namespace SWTORSharp.Core
                             rq.AddQueryParameter("crafting_profession", $"{profession.ToString()}");
                         rq.AddHeader("X-API-KEY", ApiKey);
                         var response = client.Execute(rq);
-                        var ci = CraftingList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var ci = CraftingList.Convert.FromJson(response.Content);
                         return ci;
                     }
                     public Ability GetAbilityById(int id)
@@ -102,7 +115,9 @@ namespace SWTORSharp.Core
                         var request = new RestRequest($"abilities/{id}");
                         request.AddHeader("X-API-KEY", ApiKey);
                         var response = client.Execute(request);
-                        var ab = Ability.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var ab = Ability.Convert.FromJson(response.Content);
                         return ab;
                     }
                     public AbilityList GetAbilities(int page = 1, int perpage = 50, SortOrder order = SortOrder.display_name_asc, TargetRules rule = TargetRules.Any, int MinRange = 1,
@@ -124,7 +139,9 @@ namespace SWTORSharp.Core
                             request.AddQueryParameter("cooldown_max", $"{MaxCooldown}");
                     request.AddHeader("X-Api-Key", ApiKey);
                         var response = client.Execute(request);
-                        var ab = AbilityList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            var ab = AbilityList.Convert.FromJson(response.Content);
                         return ab;
                     }
                     public Mission GetMissionById(int id)
@@ -132,7 +149,9 @@ namespace SWTORSharp.Core
                         var request = new RestRequest($"missions/{id}");
                         request.AddHeader("X-Api-Key", ApiKey);
                     var response = client.Execute(request);
-                    return Mission.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Mission.Convert.FromJson(response.Content);
                     }
                     public MissionList GetMissions(int page = 1, int perpage = 30, SortOrder order = SortOrder.display_name_asc, string query = null)
                 {
@@ -145,16 +164,20 @@ namespace SWTORSharp.Core
                         request.AddQueryParameter("sortorder", $"{order.ToString()}");
                     request.AddHeader("X-Api-Key", ApiKey);
                     var response = client.Execute(request);
-                    return MissionList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return MissionList.Convert.FromJson(response.Content);
                 }
                     public Npc GetNpcById(int id)
                     {
                         var request = new RestRequest($"npcs/{id}");
                     request.AddHeader("X-Api-Key", ApiKey);
                     var response = client.Execute(request);
-                    return Npc.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Npc.Convert.FromJson(response.Content);
                     }
-                public NpcList GetNpcs(int page =1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, bool moredetailed = false, string query = null)
+                    public NpcList GetNpcs(int page =1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, bool moredetailed = false, string query = null)
                 {
                     var request = new RestRequest($"npcs");
                     request.AddQueryParameter("page", $"{page}");
@@ -165,7 +188,9 @@ namespace SWTORSharp.Core
                         request.AddQueryParameter("sortorder", $"{order.ToString()}");
                     request.AddHeader("X-Api-Key", ApiKey);
                     var response = client.Execute(request);
-                    return NpcList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return NpcList.Convert.FromJson(response.Content);
                 }
                 #endregion
         #region DVL
@@ -176,8 +201,11 @@ namespace SWTORSharp.Core
                 var request = new RestRequest("cxp_bonus_current");
                 request.AddHeader("X-Api-Key", ApiKey);
                 var response = client2.Execute(request);
-                return CxpBonus.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return CxpBonus.Convert.FromJson(response.Content);
             }
+       
         /// <summary>
         /// Returns all of the CXP bonus so far for the current month
         /// </summary>
@@ -187,7 +215,9 @@ namespace SWTORSharp.Core
                 var request = new RestRequest("cxp_bonus");
                 request.AddHeader("X-Api-Key", ApiKey);
                 var response = client2.Execute(request);
-                return CxpBonusList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return CxpBonusList.Convert.FromJson(response.Content);
             }
             public ServerList GetServers(History history = History.none)
             {
@@ -196,7 +226,9 @@ namespace SWTORSharp.Core
 
             request.AddHeader("X-Api-Key", ApiKey);
                 var response = client2.Execute(request);
-                return ServerList.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return ServerList.Convert.FromJson(response.Content);
             }
             public Server GetServer(int id, History history = History.none)
             {
@@ -205,8 +237,24 @@ namespace SWTORSharp.Core
 
             request.AddHeader("X-Api-Key", ApiKey);
                 var response = client2.Execute(request);
-                return Server.Convert.FromJson(response.Content);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Server.Convert.FromJson(response.Content);
             }
         #endregion
-    }
+        protected void HandleFailure(HttpStatusCode code)
+        {
+            switch (code)
+            {
+                case (HttpStatusCode)400:
+                    throw new SWTORException("400 | Invalid/Bad Request.");
+                case (HttpStatusCode)404:
+                    throw new SWTORException("404 | Server Error / Resource not found.");
+                case (HttpStatusCode)401:
+                    throw new SWTORException("401 | Unauthorized.");
+                default:
+                    throw new SWTORException("Unkown Error.");
+            }
+        }
+        }
 }

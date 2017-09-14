@@ -92,6 +92,7 @@ namespace SWTORSharp.Core
         {
             // Serialize/deserialize helpers
 
+
             public static Ability FromJson(string json) => JsonConvert.DeserializeObject<Ability>(json, Settings);
             public static string ToJson(Ability o) => JsonConvert.SerializeObject(o, Settings);
 

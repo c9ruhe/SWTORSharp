@@ -15,7 +15,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -48,13 +48,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Achievement.cs" />
+    <Compile Include="Core\CodexEntry.cs" />
     <Compile Include="Core\Ability.cs" />
+    <Compile Include="Core\Collection.cs" />
     <Compile Include="Core\CraftingItem.cs" />
     <Compile Include="Core\Enums.cs" />
     <Compile Include="Core\Item.cs" />
     <Compile Include="Core\Server.cs" />
     <Compile Include="Core\Mission.cs" />
     <Compile Include="Core\Npc.cs" />
+    <Compile Include="Core\Decoration.cs" />
+    <Compile Include="Core\Reputation.cs" />
+    <Compile Include="Core\Title.cs" />
+    <Compile Include="Core\LegacyTitle.cs" />
+    <Compile Include="Core\Stronghold.cs" />
     <Compile Include="SWTORClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SWTORException.cs" />

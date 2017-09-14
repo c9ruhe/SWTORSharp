@@ -67,10 +67,10 @@ namespace SWTORSharp.Core
         public Npc[] Objects { get; set; }
 
         [JsonProperty("items_per_pags")]
-        public long ItemsPerPags { get; set; }
+        public int ItemsPerPags { get; set; }
 
         [JsonProperty("current_page")]
-        public long CurrentPage { get; set; }
+        public int CurrentPage { get; set; }
 
         [JsonProperty("next_page")]
         public string NextPage { get; set; }
@@ -79,7 +79,7 @@ namespace SWTORSharp.Core
         public object Query { get; set; }
 
         [JsonProperty("total_items")]
-        public long TotalItems { get; set; }
+        public int TotalItems { get; set; }
 
         [JsonProperty("previous_page")]
         public object PreviousPage { get; set; }
@@ -88,7 +88,7 @@ namespace SWTORSharp.Core
         public string SortOrder { get; set; }
 
         [JsonProperty("total_pages")]
-        public long TotalPages { get; set; }
+        public int TotalPages { get; set; }
 
         public class Convert
         {
@@ -144,7 +144,7 @@ namespace SWTORSharp.Core
         public object Description { get; set; }
 
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("website_link")]
         public string WebsiteLink { get; set; }

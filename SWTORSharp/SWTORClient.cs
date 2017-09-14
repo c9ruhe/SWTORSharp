@@ -1,8 +1,9 @@
 ﻿using RestSharp;
 using Newtonsoft.Json;
 using System.Net;
+using SWTORSharp.Core;
 
-namespace SWTORSharp.Core
+namespace SWTORSharp
 {
     public class SWTORClient
     {
@@ -11,7 +12,7 @@ namespace SWTORSharp.Core
         {
             ApiKey = apikey;
         }
-        #region Data
+#region Data
                 private readonly RestClient client = new RestClient("http://swtordata.com/api/v2_2/");
                     /// <summary>
                     /// Get Item by it's ID. | List: http://swtordata.com/items
@@ -121,7 +122,7 @@ namespace SWTORSharp.Core
                         return ab;
                     }
                     public AbilityList GetAbilities(int page = 1, int perpage = 50, SortOrder order = SortOrder.display_name_asc, TargetRules rule = TargetRules.Any, int MinRange = 1,
-                        int MaxRange = 0, int MinCooldown = 1, int MaxCooldown = 0,string query = null)
+                        int MaxRange = 0, int MinCooldown = 1, int MaxCooldown = 0, string query = null)
                     {
                         var request = new RestRequest($"abilities");
                         request.AddQueryParameter("page", $"{page}");
@@ -192,7 +193,200 @@ namespace SWTORSharp.Core
                 HandleFailure(response.StatusCode);
             return NpcList.Convert.FromJson(response.Content);
                 }
-                #endregion
+                    public CodexEntry GetCodexById(int id)
+        {
+            var request = new RestRequest($"codexes/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return CodexEntry.Convert.FromJson(response.Content);
+        }
+                    public CodexEntryList GetCodexes(int page =1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query = null)
+                    {
+            var request = new RestRequest($"codexes");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return CodexEntryList.Convert.FromJson(response.Content);
+        }
+                    public Decoration GetDecorationByID(int id)
+        {
+            var request = new RestRequest($"decorations/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Decoration.Convert.FromJson(response.Content);
+        }
+                    public DecorationList GetDecorations(int page = 1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query = null)
+                    {
+            var request = new RestRequest($"decorations");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return DecorationList.Convert.FromJson(response.Content);
+        }
+                    public Reputation GetReputationById(int id)
+                    {
+            var request = new RestRequest($"reputations/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Reputation.Convert.FromJson(response.Content);
+        }
+                    public ReputationList GetReputations(int page = 1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query =null)
+                    {
+            var request = new RestRequest($"reputations");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return ReputationList.Convert.FromJson(response.Content);
+        }
+                    public Stronghold GetStrongholdById(int id)
+                    {
+            var request = new RestRequest($"strongholds/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Stronghold.FromJson(response.Content);
+        }
+                    public StrongholdList GetStrongholds(int page = 1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query = null)
+                        {
+            var request = new RestRequest($"strongholds");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return StrongholdList.FromJson(response.Content);
+        }
+                    public Achievement GetAchievementById(int id)
+                    {
+            var request = new RestRequest($"achievements/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Achievement.FromJson(response.Content);
+        }
+                    public AchievementList GetAchievements(int page = 1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query = null)
+                        {
+            var request = new RestRequest($"achievements");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return AchievementList.FromJson(response.Content);
+        }
+                    public Collection GetCollectionById(int id)
+                    {
+            var request = new RestRequest($"collections/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Collection.FromJson(response.Content);
+        }
+                    public CollectionList GetCollections(int page = 1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query = null)
+        {
+            var request = new RestRequest($"collections");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return CollectionList.FromJson(response.Content);
+        }
+                    public Title GetTitleById(int id)
+                    {
+            var request = new RestRequest($"titles/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return Title.FromJson(response.Content);
+        }
+                    public TitleList GetTitles(int page = 1, int perpage =20, SortOrder order = SortOrder.display_name_asc, string query = null)
+                        {
+            var request = new RestRequest($"titles");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return TitleList.FromJson(response.Content);
+        }
+                    public LegacyTitle GetLegacyTitleById(int id)
+                    {
+            var request = new RestRequest($"legacytitles/{id}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return LegacyTitle.FromJson(response.Content);
+        }
+                    public LegacyTitleList GetLegacyTitles(int page = 1, int perpage = 20, SortOrder order = SortOrder.display_name_asc, string query = null)
+        {
+            var request = new RestRequest($"legacytitles");
+            request.AddQueryParameter("page", $"{page}");
+            request.AddQueryParameter("perpage", $"{perpage}");
+            if (query != null)
+                request.AddParameter("query", query);
+            if (order == SortOrder.id_asc || order == SortOrder.id_desc || order == SortOrder.display_name_asc || order == SortOrder.display_name_desc)
+                request.AddQueryParameter("sortorder", $"{order.ToString()}");
+            request.AddHeader("X-Api-Key", ApiKey);
+            var response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                HandleFailure(response.StatusCode);
+            return LegacyTitleList.FromJson(response.Content);
+        }
+
+        #endregion
         #region DVL
         private readonly RestClient client2 = new RestClient("http://swtordata.com/api/dvl/v1/");
 
@@ -247,11 +441,13 @@ namespace SWTORSharp.Core
             switch (code)
             {
                 case (HttpStatusCode)400:
-                    throw new SWTORException("400 | Invalid/Bad Request.");
+                    throw new SWTORException("400 | Invalid / Bad Request.");
                 case (HttpStatusCode)404:
-                    throw new SWTORException("404 | Server Error / Resource not found.");
+                    throw new SWTORException("404 | Resource not found.");
                 case (HttpStatusCode)401:
                     throw new SWTORException("401 | Unauthorized.");
+                case (HttpStatusCode)500:
+                    throw new SWTORException("500 | Internal Server Error");
                 default:
                     throw new SWTORException("Unkown Error.");
             }

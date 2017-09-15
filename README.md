@@ -2,7 +2,10 @@
 Wrapper for [SWTORData.com](http://swtordata.com) Api.
 
 ## Installation 
+ From Nuget:
+`PM> Install-Package SWTORSharp`
 
+*or*
 1. [Clone the repo](https://github.com/c9ruhe/SWTORSharp.git) or [download the zip file](https://github.com/c9ruhe/SWTORSharp/archive/master.zip).
 
 2. Build the project and reference the `.dll` for your own app.

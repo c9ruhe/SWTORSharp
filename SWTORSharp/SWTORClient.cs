@@ -441,15 +441,15 @@ namespace SWTORSharp
             switch (code)
             {
                 case (HttpStatusCode)400:
-                    throw new SWTORException("400 | Invalid / Bad Request.");
+                    throw new SWTORException("400 | Invalid / Bad Request.", code);
                 case (HttpStatusCode)404:
-                    throw new SWTORException("404 | Resource not found.");
+                    throw new SWTORException("404 | Resource not found.", code);
                 case (HttpStatusCode)401:
-                    throw new SWTORException("401 | Unauthorized.");
+                    throw new SWTORException("401 | Unauthorized.", code);
                 case (HttpStatusCode)500:
-                    throw new SWTORException("500 | Internal Server Error");
+                    throw new SWTORException("500 | Internal Server Error", code);
                 default:
-                    throw new SWTORException("Unkown Error.");
+                    throw new SWTORException("Unkown Error.", code);
             }
         }
         }

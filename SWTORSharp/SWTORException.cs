@@ -6,8 +6,10 @@ namespace SWTORSharp.Core
 {
     internal class SWTORException : Exception
     {
-        public SWTORException(string message) : base(message)
+        public HttpStatusCode HttpStatusCode;
+        public SWTORException(string message, HttpStatusCode code) : base(message)
         {
+            HttpStatusCode = code;
         }
 
     }

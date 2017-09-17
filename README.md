@@ -2,7 +2,7 @@
 Wrapper for [SWTORData.com](http://swtordata.com) Api.
 
 ## Installation 
- From Nuget:
+ From [Nuget](https://www.nuget.org/packages/SWTORSharp/):
 `PM> Install-Package SWTORSharp`
 
 *or*
